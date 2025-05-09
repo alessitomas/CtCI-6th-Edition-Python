@@ -1,0 +1,22 @@
+# "Mr John Smith  "
+
+time: O(n)
+space: O(1)
+
+def urlify(string, str_len):
+    string = list(string)
+    end_pointer = len(string) - 1
+    start_pointer = str_len - 1
+
+    while start_pointer > 0:
+        if string[start_pointer] != " ":
+            string[end_pointer] = string[start_pointer]
+            end_pointer -= 1
+        else:
+            for c in "%20":
+                string[end_pointer] = c
+                end_pointer -= 1
+        start_pointer -= 1
+    
+    return "".join(string)
+           
