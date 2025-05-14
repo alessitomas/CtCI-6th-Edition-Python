@@ -1,71 +1,53 @@
-def urlify(string, str_len):
-    string = list(string)
-    end_pointer = len(string) - 1
-    start_pointer = str_len - 1
+def check_permutation(string):
+    char_count = {}
+    total_count = 0
+    for c in string:
+        if c.isalpha():
+            char_count[c.lower()] = char_count.get(c.lower(), 0) + 1
+            total_count += 1
+    n_odd_freq = 0
+    for freq in char_count.values():
+        if freq % 2 == 1:
+            n_odd_freq += 1
 
-    while start_pointer >= 0:
-        if string[start_pointer] != " ":
-            string[end_pointer] = string[start_pointer]
-            end_pointer -= 1
-        else:
-            for c in "02%":
-                string[end_pointer] = c
-                end_pointer -= 1
-        start_pointer -= 1
+    if n_odd_freq > 1:
+        return False
     
-    return "".join(string)
-
-print(len("Mr John Smith       "))
-print(len("Mr%20John%20Smith"))
-
-
-
-def ctci_urlify(string, str_len):
-    string = list(string)
-    count_space = 0
-    SPACE = " "
+    if n_odd_freq == 1 and total_count % 2 == 0:
+        return False
     
-    for i in range(str_len):
-        c = string[i]
-        if c == SPACE:
-            count_space += 1
-    
-    final_len = str_len + count_space * 2
-    index = final_len - 1
-    if str_len < len(string) : string[str_len] = "p"
-    for i in reversed(range(str_len)):
-        char = string[i]
-        if char == SPACE:
-            string[index] = "0" 
-            string[index - 1] = "2"
-            string[index - 2] = "%"
-            index -= 3
-        else:
-            string[index] = char
-            index -= 1
-    return "".join(string)
-
+    return True
 
 
 import unittest
-# O(N)
+
 class Test(unittest.TestCase):
-    """Test Cases"""
+    test_cases = [
+        ("aba", True),
+        ("aab", True),
+        ("abba", True),
+        ("aabb", True),
+        ("a-bba", True),
+        ("a-bba!", True),
+        ("Tact Coa", True),
+        ("jhsabckuj ahjsbckj", True),
+        ("Able was I ere I saw Elba", True),
+        ("So patient a nurse to nurse a patient so", False),
+        ("Random Words", False),
+        ("Not a Palindrome", False),
+        ("no x in nixon", True),
+        ("azAZ", True),
+    ]
+    testable_functions = [
+        check_permutation,
+    ]
 
-    test_cases = {
-        ("much ado about nothing      ", 22): "much%20ado%20about%20nothing",
-        ("Mr John Smith       ", 13): "Mr%20John%20Smith",
-        (" a b    ", 4): "%20a%20b",
-        (" a b       ", 5): "%20a%20b%20",
-    }
-    testable_functions = [ctci_urlify]
-
-    def test_urlify(self):
-        for urlify in self.testable_functions:
-            for args, expected in self.test_cases.items():
-                actual = urlify(*args)
-                assert actual == expected, f"Failed {urlify.__name__} for: {[*args]}"
+    def test_pal_perm(self):
+        for f in self.testable_functions:
+            for [test_string, expected] in self.test_cases:
+                assert f(test_string) == expected
 
 
 if __name__ == "__main__":
     unittest.main()
+            

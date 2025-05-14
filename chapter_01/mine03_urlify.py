@@ -15,7 +15,7 @@ def urlify(string, str_len):
     
     return "".join(string)
 
-print(len("Mr John Smith       "))
+print(len("Mr John Smith   "))
 print(len("Mr%20John%20Smith"))
 
 
@@ -54,11 +54,11 @@ class Test(unittest.TestCase):
 
     test_cases = {
         ("much ado about nothing      ", 22): "much%20ado%20about%20nothing",
-        ("Mr John Smith       ", 13): "Mr%20John%20Smith",
+        ("Mr John Smith    ", 13): "Mr%20John%20Smith",
         (" a b    ", 4): "%20a%20b",
         (" a b       ", 5): "%20a%20b%20",
     }
-    testable_functions = [ctci_urlify]
+    testable_functions = [urlify, ctci_urlify]
 
     def test_urlify(self):
         for urlify in self.testable_functions:
