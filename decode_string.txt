@@ -1,0 +1,10 @@
+The general ideia of the recursion would be
+
+DFS backtracking
+
+og = "3[a2[c]]2[ef]jl"
+decode(og) = 3 * decode("[a2[c]]") + 2 * decode("[ef]") + "jl"
+decode("[a2[c]]") = "a" + 2 * "c"
+decode("[ef]") = "ef"
+
+
